@@ -104,10 +104,6 @@ const Pagamento: React.FC<PagamentoProps> = ({
       alert('CVV deve ter 3 dígitos.')
       return false
     }
-    if (!/^\d{2}\/\d{4}$/.test(validade)) {
-      alert('Validade deve estar no formato MM/AAAA.')
-      return false
-    }
     return true
   }
 
