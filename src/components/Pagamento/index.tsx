@@ -142,11 +142,7 @@ const Pagamento: React.FC<PagamentoProps> = ({
         <ModalOverlay isOpen={isOpen}>
           <ModalWrapper>
             <Titulo>
-              Pagamento - Valor a pagar{' '}
-              {new Intl.NumberFormat('pt-BR', {
-                style: 'currency',
-                currency: 'BRL'
-              }).format(totalValue)}
+              Pagamento - Valor a pagar R$ {totalValue.toFixed(2)}
             </Titulo>
             <form onSubmit={handlePayment}>
               <div>

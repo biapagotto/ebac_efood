@@ -32,7 +32,7 @@ const Carrinho: React.FC<CarrinhoProps> = ({
 }) => {
   const [openShipping, setOpenShipping] = useState(false)
   const [openPayment, setOpenPayment] = useState(false)
-  const [deliveryData, setDeliveryData] = useState<any>({})
+  const [deliveryData, setDeliveryData] = useState<unknown>({})
 
   const openShippingModal = () => setOpenShipping(true)
   const closeShippingModal = () => setOpenShipping(false)
