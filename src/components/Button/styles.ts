@@ -7,11 +7,19 @@ export const ButtonContainer = styled.button<{
   backgroundColor?: string
   color?: string
   marginLeft?: string
+  marginTop?: string
+  variant?: 'primary' | 'secondary'
 }>`
   width: ${(props) => props.width || 'auto'};
   height: ${(props) => props.height || 'auto'};
-  background-color: ${(props) => props.backgroundColor || 'transparent'};
-  color: ${(props) => props.color || '#000'};
+  background-color: ${(props) =>
+    props.variant === 'primary'
+      ? props.backgroundColor || cores.coral
+      : props.backgroundColor || cores.creme};
+  color: ${(props) =>
+    props.variant === 'primary'
+      ? props.color || cores.branco2
+      : props.color || cores.coral};
   border: none;
   cursor: pointer;
   font-family: 'Roboto', sans-serif;
@@ -22,7 +30,8 @@ export const ButtonContainer = styled.button<{
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: ${(props) => props.marginLeft || '0px'}; // Adicionado
+  margin-left: ${(props) => props.marginLeft || '0px'};
+  margin-top: ${(props) => props.marginTop || '0px'};
 `
 
 export const ButtonLink = styled.a<{
@@ -31,12 +40,21 @@ export const ButtonLink = styled.a<{
   backgroundColor?: string
   color?: string
   marginLeft?: string
+  marginTop?: string
+  variant?: 'primary' | 'secondary'
 }>`
   width: ${(props) => props.width || 'auto'};
   height: ${(props) => props.height || 'auto'};
-  background-color: ${(props) => props.backgroundColor || 'transparent'};
-  color: ${(props) => props.color || cores.coral};
-  margin-left: ${(props) => props.marginLeft || '0px'}; // Adicionado
+  background-color: ${(props) =>
+    props.variant === 'primary'
+      ? props.backgroundColor || cores.coral
+      : props.backgroundColor || cores.creme};
+  color: ${(props) =>
+    props.variant === 'primary'
+      ? props.color || cores.branco2
+      : props.color || cores.coral};
+  margin-left: ${(props) => props.marginLeft || '0px'};
+  margin-top: ${(props) => props.marginTop || '0px'};
   border: none;
   text-decoration: none;
   display: flex;

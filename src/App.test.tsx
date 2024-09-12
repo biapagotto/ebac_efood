@@ -1,9 +1,10 @@
-import React from 'react'
 import { render, screen } from '@testing-library/react'
 import App from './App'
 
-test('renders learn react link', () => {
+test('renders efood hero text', () => {
   render(<App />)
-  const linkElement = screen.getByText(/learn react/i)
-  expect(linkElement).toBeInTheDocument()
+  const heroText = screen.getByText(
+    /Viva experiências gastronômicas no conforto da sua casa/i
+  )
+  expect(heroText).toBeInTheDocument()
 })

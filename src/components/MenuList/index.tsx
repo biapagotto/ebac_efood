@@ -35,7 +35,7 @@ const MenuList: React.FC<MenuListProps> = ({
         {items.length > 0 ? (
           items.map((item) => (
             <Card key={item.id} isWhiteBackground={true} size={size}>
-              <Image src={item.foto} />
+              <Image src={item.foto} alt={item.nome} />
               <Titulo>{item.nome}</Titulo>
               <Descricao>{item.descricao}</Descricao>
               <Button onClick={() => onItemClick(item)}>Mais detalhes</Button>

@@ -37,10 +37,9 @@ const Restaurant: React.FC<Props> = ({
   size = 'large',
   menuitem
 }) => {
-  console.log(menuitem)
   return (
     <Card isWhiteBackground={isWhiteBackground} size={size}>
-      <Image src={imageUrl} />
+      <Image src={imageUrl} alt={`Imagem do restaurante ${titulo}`} />
       <Infos>
         {showHighlight && <Tag size="big">Destaque da semana</Tag>}
         {category && <Tag size="small">{category}</Tag>}

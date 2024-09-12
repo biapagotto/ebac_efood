@@ -1,6 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { MenuItem } from '../MenuList'
-import { Button } from '../Button'
 import {
   Wrapper,
   ProdutoCard,
@@ -16,6 +15,9 @@ import {
 } from './styles'
 import { cores } from '../../styles'
 import LixeiraImage from '../../assets/images/lixeira.svg'
+import Entrega from '../Entrega'
+import Pagamento from '../Pagamento'
+import { Button } from '../Button'
 
 interface CarrinhoProps {
   produtos: MenuItem[]
@@ -28,8 +30,44 @@ const Carrinho: React.FC<CarrinhoProps> = ({
   onRemoveItem,
   totalValue
 }) => {
+  const [openShipping, setOpenShipping] = useState(false)
+  const [openPayment, setOpenPayment] = useState(false)
+  const [deliveryData, setDeliveryData] = useState<any>({})
+
+  const openShippingModal = () => setOpenShipping(true)
+  const closeShippingModal = () => setOpenShipping(false)
+  const openPaymentModal = () => setOpenPayment(true)
+  const closePaymentModal = () => setOpenPayment(false)
+
+  const handleBackToCart = () => {
+    setOpenShipping(false)
+    setOpenPayment(false)
+  }
+
   return (
-    <ModalOverlay>
+    <>
+      <ModalOverlay isOpen={openShipping}>
+        <Entrega
+          isOpen={openShipping}
+          onClose={closeShippingModal}
+          onDeliveryDataChange={(data) => {
+            setDeliveryData(data)
+            openPaymentModal()
+          }}
+          onBackToCart={handleBackToCart}
+        />
+      </ModalOverlay>
+
+      <ModalOverlay isOpen={openPayment}>
+        <Pagamento
+          isOpen={openPayment}
+          onClose={closePaymentModal}
+          deliveryData={deliveryData}
+          produtos={produtos}
+          totalValue={totalValue}
+        />
+      </ModalOverlay>
+
       <Wrapper>
         {produtos.map((produto) => (
           <ProdutoCard key={produto.id}>
@@ -37,7 +75,10 @@ const Carrinho: React.FC<CarrinhoProps> = ({
             <ProdutoInfo>
               <ProdutoNome>{produto.nome}</ProdutoNome>
               <ProdutoPreco>
-                R$ {parseFloat(produto.preco).toFixed(2)}
+                {new Intl.NumberFormat('pt-BR', {
+                  style: 'currency',
+                  currency: 'BRL'
+                }).format(parseFloat(produto.preco))}
               </ProdutoPreco>
             </ProdutoInfo>
             <RemoverProduto onClick={() => onRemoveItem(produto.id)}>
@@ -47,19 +88,28 @@ const Carrinho: React.FC<CarrinhoProps> = ({
         ))}
         <ValorTotalContainer>
           <ValorTexto>Valor total:</ValorTexto>
-          <Valor>R$ {totalValue.toFixed(2)}</Valor>
+          <Valor>
+            {new Intl.NumberFormat('pt-BR', {
+              style: 'currency',
+              currency: 'BRL'
+            }).format(totalValue)}
+          </Valor>
         </ValorTotalContainer>
         <Button
           width="344px"
           height="24px"
           backgroundColor={cores.creme}
           color={cores.coral}
-          onClick={() => console.log('Continuar com a entrega')}
+          marginTop="16px"
+          marginLeft="8px"
+          type="button"
+          variant="secondary"
+          onClick={openShippingModal}
         >
           Continuar com a entrega
         </Button>
       </Wrapper>
-    </ModalOverlay>
+    </>
   )
 }
 

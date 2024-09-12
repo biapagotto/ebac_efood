@@ -1,29 +1,48 @@
-import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { RootState, AppDispatch } from '../../Redux/store'
+import { addToCart, removeFromCart } from '../../Redux/cartSlice'
 import Header from '../../components/Header'
 import Hero from '../../components/Hero'
 import MenuList, { MenuItem } from '../../components/MenuList'
 import ModalCompra from '../../components/Modal'
 import Carrinho from '../../components/Carrinho'
-import { useParams } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
-import { RootState, AppDispatch } from '../../Redux/store'
-import { addToCart, removeFromCart } from '../../Redux/cartSlice'
+import { useState, useEffect } from 'react'
 
-const Cardapio = () => {
+const Cardapio: React.FC = () => {
   const { id } = useParams<{ id: string }>()
   const [menuItems, setMenuItems] = useState<MenuItem[]>([])
   const [selectedProduct, setSelectedProduct] = useState<MenuItem | null>(null)
+  const [restaurantInfo, setRestaurantInfo] = useState<{
+    capa: string
+    titulo: string
+    tipo: string
+  } | null>(null)
   const [showCart, setShowCart] = useState(false)
 
   const dispatch = useDispatch<AppDispatch>()
   const cartItems = useSelector((state: RootState) => state.cart.items)
 
   useEffect(() => {
-    fetch(`https://fake-api-tau.vercel.app/api/efood/restaurantes/${id}`)
-      .then((res) => res.json())
-      .then((res) => {
-        setMenuItems(res.cardapio)
-      })
+    const fetchRestaurantData = async () => {
+      try {
+        const response = await fetch(
+          `https://fake-api-tau.vercel.app/api/efood/restaurantes/${id}`
+        )
+        if (!response.ok) throw new Error('Failed to fetch restaurant data')
+        const data = await response.json()
+        setMenuItems(data.cardapio)
+        setRestaurantInfo({
+          capa: data.capa,
+          titulo: data.titulo,
+          tipo: data.tipo
+        })
+      } catch (error) {
+        console.error('Erro ao buscar dados do restaurante:', error)
+      }
+    }
+
+    fetchRestaurantData()
   }, [id])
 
   const handleOpenModal = (product: MenuItem) => {
@@ -55,7 +74,13 @@ const Cardapio = () => {
   return (
     <>
       <Header onCartClick={handleToggleCart} cartItemCount={cartItems.length} />
-      <Hero />
+      {restaurantInfo && (
+        <Hero
+          titulo={restaurantInfo.titulo}
+          tipo={restaurantInfo.tipo}
+          capa={restaurantInfo.capa}
+        />
+      )}
       <MenuList items={menuItems} onItemClick={handleOpenModal} />
       {selectedProduct && (
         <ModalCompra

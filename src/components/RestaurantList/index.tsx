@@ -2,10 +2,10 @@ import React from 'react'
 import Restaurant from '../Restaurants'
 import { ListTwoColumns, ListThreeColumns } from '../RestaurantList/styles'
 import { RestaurantsContainer } from '../Restaurants/styles'
-import { Restaurants } from '../../pages/Home'
+import { Restaurant as RestaurantType } from '../../pages/Home'
 
 export type Props = {
-  restaurants: Restaurants[]
+  restaurants: RestaurantType[]
   title: string
   background: string
   size?: 'large' | 'small'
@@ -32,8 +32,8 @@ const RestaurantList: React.FC<Props> = ({
               titulo={restaurant.titulo}
               description={restaurant.descricao}
               imageUrl={restaurant.capa}
-              rating={restaurant.avaliacao ?? 0}
-              category={restaurant.tipo ?? 'Unknown'}
+              rating={restaurant.avaliacao || 'N/A'}
+              category={restaurant.tipo || 'Unknown'}
               showHighlight={restaurant.destacado === 'true'}
               isWhiteBackground={true}
               size={size}
@@ -45,4 +45,5 @@ const RestaurantList: React.FC<Props> = ({
     </section>
   )
 }
+
 export default RestaurantList

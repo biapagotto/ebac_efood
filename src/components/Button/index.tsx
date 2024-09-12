@@ -7,18 +7,22 @@ type ButtonProps = {
   backgroundColor?: string
   color?: string
   marginLeft?: string
+  marginTop?: string
   type?: 'button' | 'submit' | 'reset'
   title?: string
   href?: string
   onClick?: () => void
   children: React.ReactNode
+  variant?: 'primary' | 'secondary'
 }
 
 export const Button: React.FC<ButtonProps> = ({
   children,
   type = 'button',
   onClick,
-  marginLeft = '8px',
+  marginLeft = '0px',
+  marginTop,
+  variant = 'primary',
   ...props
 }) => {
   if (props.href) {
@@ -27,6 +31,8 @@ export const Button: React.FC<ButtonProps> = ({
         href={props.href}
         title={props.title}
         marginLeft={marginLeft}
+        marginTop={marginTop}
+        variant={variant}
         {...props}
       >
         {children}
@@ -39,6 +45,8 @@ export const Button: React.FC<ButtonProps> = ({
       type={type}
       onClick={onClick}
       marginLeft={marginLeft}
+      marginTop={marginTop}
+      variant={variant}
       {...props}
     >
       {children}

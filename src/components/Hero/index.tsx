@@ -7,15 +7,20 @@ import {
   Title,
   SubTitle
 } from './styles'
-import macarrao from '../../assets/images/macarrao.png'
 
-const Hero: React.FC = () => (
+interface HeroProps {
+  titulo: string
+  tipo: string
+  capa: string
+}
+
+const Hero: React.FC<HeroProps> = ({ titulo, tipo, capa }) => (
   <HeroContainer>
-    <HeroImage src={macarrao} alt="Hero" />
+    <HeroImage src={capa} alt="Hero" />
     <Overlay />
     <HeroContent>
-      <Title>Italiana</Title>
-      <SubTitle>La Dolce Vita Trattoria</SubTitle>
+      <Title>{titulo}</Title>
+      <SubTitle>{tipo}</SubTitle>
     </HeroContent>
   </HeroContainer>
 )
