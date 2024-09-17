@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import Header from '../../components/Header'
 import Hero from '../../components/Hero'
 import MenuList, { MenuItem } from '../../components/MenuList'
 import ModalCompra from '../../components/Modal'
 import Carrinho from '../../components/Carrinho'
-import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState, AppDispatch } from '../../Redux/store'
 import { addToCart, removeFromCart } from '../../Redux/cartSlice'
@@ -20,6 +20,7 @@ const Cardapio: React.FC = () => {
   } | null>(null)
   const [showCart, setShowCart] = useState(false)
 
+  const navigate = useNavigate()
   const dispatch = useDispatch<AppDispatch>()
   const cartItems = useSelector((state: RootState) => state.cart.items)
 
@@ -65,6 +66,11 @@ const Cardapio: React.FC = () => {
     setShowCart(!showCart)
   }
 
+  const handleCloseCart = () => {
+    setShowCart(false)
+    navigate(`/Cardapio/${id}`)
+  }
+
   const totalValue = cartItems.reduce(
     (total, item) => total + parseFloat(item.preco),
     0
@@ -93,6 +99,8 @@ const Cardapio: React.FC = () => {
           produtos={cartItems}
           onRemoveItem={handleRemoveFromCart}
           totalValue={totalValue}
+          onClose={handleCloseCart}
+          restaurantId={id as string}
         />
       )}
     </>

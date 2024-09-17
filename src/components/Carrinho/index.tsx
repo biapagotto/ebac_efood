@@ -21,15 +21,24 @@ interface CarrinhoProps {
   produtos: MenuItem[]
   onRemoveItem: (id: number) => void
   totalValue: number
+  onClose: () => void
+  restaurantId: string
 }
 
 const Carrinho: React.FC<CarrinhoProps> = ({
   produtos,
   onRemoveItem,
-  totalValue
+  totalValue,
+  onClose
 }) => {
+  const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) {
+      onClose()
+    }
+  }
+
   return (
-    <ModalOverlay>
+    <ModalOverlay onClick={handleOverlayClick}>
       <Wrapper>
         {produtos.map((produto) => (
           <ProdutoCard key={produto.id}>
