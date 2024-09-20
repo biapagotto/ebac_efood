@@ -31,12 +31,12 @@ export const Overlay = styled.div`
   width: 100%;
   height: 100%;
   background: #00000080;
-  z-index: 2;
+  z-index: 1;
 `
 
 export const HeroContent = styled.div`
   position: relative;
-  z-index: 3;
+  z-index: 1;
   color: ${cores.branca};
   margin-left: 170px;
 `
@@ -49,6 +49,7 @@ export const Title = styled.div`
   text-align: left;
   color: #ffffff;
   margin-top: 30px;
+  z-index: 1;
 `
 
 export const SubTitle = styled.div`

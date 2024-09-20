@@ -28,8 +28,4 @@ export const GlobalCss = createGlobalStyle`
     display: flex;
     flex-direction: column;
   }
-
-  .no-scroll {
-    overflow: hidden;
-  }
 `
