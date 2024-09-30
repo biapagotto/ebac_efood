@@ -6,10 +6,10 @@ import {
   CaixaTexto,
   ExpiryContainer,
   Label,
-  ModalOverlay,
   ModalWrapper,
   PaymentDetails,
-  Titulo
+  Titulo,
+  PaymentModal
 } from './styles'
 import { MenuItem } from '../MenuList'
 import { Button } from '../Button'
@@ -120,6 +120,10 @@ const Pagamento: React.FC<PagamentoProps> = ({
     setEntregaOpen(true)
   }
 
+  const handleBackToCart = () => {
+    setEntregaOpen(false)
+  }
+
   return (
     <>
       {isEntregaOpen ? (
@@ -130,12 +134,13 @@ const Pagamento: React.FC<PagamentoProps> = ({
             setEntregaOpen(false)
             deliveryData(data)
           }}
-          onBackToCart={function (): void {
+          onBackToCart={handleBackToCart}
+          openPaymentModal={function (): void {
             throw new Error('Function not implemented.')
           }}
         />
       ) : (
-        <ModalOverlay isOpen={isOpen}>
+        <PaymentModal isOpen={isOpen}>
           <ModalWrapper>
             <Titulo>
               Pagamento - Valor a pagar{' '}
@@ -229,7 +234,7 @@ const Pagamento: React.FC<PagamentoProps> = ({
               </Button>
             </form>
           </ModalWrapper>
-        </ModalOverlay>
+        </PaymentModal>
       )}
 
       {isConfirmationModalOpen && (

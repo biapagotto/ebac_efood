@@ -12,6 +12,7 @@ export const HeroContainer = styled.div`
   padding: 0 20px;
   box-sizing: border-box;
   margin-bottom: 42px;
+  z-index: 1;
 `
 
 export const HeroImage = styled.img`

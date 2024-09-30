@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import {
-  ModalOverlay,
+  EntregaModalOverlay,
   ModalWrapper,
   Titulo,
   Label,
@@ -20,14 +20,16 @@ interface EntregaProps {
   isOpen: boolean
   onClose: () => void
   onDeliveryDataChange: (data: DeliveryData) => void
-  onBackToCart: () => void // Função para retornar ao carrinho
+  onBackToCart: () => void
+  openPaymentModal: () => void
 }
 
 const Entrega: React.FC<EntregaProps> = ({
   isOpen,
   onClose,
   onDeliveryDataChange,
-  onBackToCart
+  onBackToCart,
+  openPaymentModal
 }) => {
   const [receiver, setReceiver] = useState('')
   const [endereco, setEndereco] = useState('')
@@ -38,6 +40,7 @@ const Entrega: React.FC<EntregaProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+    e.stopPropagation()
 
     const deliveryData: DeliveryData = {
       address: `${endereco}, ${numero} ${complemento}`,
@@ -46,12 +49,13 @@ const Entrega: React.FC<EntregaProps> = ({
     }
 
     onDeliveryDataChange(deliveryData)
+    openPaymentModal()
     onClose()
   }
 
   return (
-    <ModalOverlay isOpen={isOpen}>
-      <ModalWrapper>
+    <EntregaModalOverlay isOpen={isOpen} onClick={onClose}>
+      <ModalWrapper onClick={(e) => e.stopPropagation()}>
         <Titulo>Detalhes de Entrega</Titulo>
         <form onSubmit={handleSubmit}>
           <div>
@@ -124,6 +128,7 @@ const Entrega: React.FC<EntregaProps> = ({
           >
             Finalizar pagamento
           </Button>
+
           <Button
             width="344px"
             height="24px"
@@ -138,7 +143,7 @@ const Entrega: React.FC<EntregaProps> = ({
           </Button>
         </form>
       </ModalWrapper>
-    </ModalOverlay>
+    </EntregaModalOverlay>
   )
 }
 

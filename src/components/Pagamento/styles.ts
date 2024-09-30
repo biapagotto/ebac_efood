@@ -1,17 +1,16 @@
 import styled from 'styled-components'
 import { cores } from '../../styles'
 
-export const ModalOverlay = styled.div<{ isOpen: boolean }>`
+export const PaymentModal = styled.div<{ isOpen: boolean }>`
   display: ${(props) => (props.isOpen ? 'block' : 'none')};
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 3;
+  z-index: 5;
 `
 
 export const ModalWrapper = styled.div`
@@ -21,6 +20,12 @@ export const ModalWrapper = styled.div`
   position: fixed;
   right: 0;
   height: 100%;
+
+  pointer-events: auto;
+  &:focus,
+  &:hover {
+    pointer-events: all;
+  }
 `
 
 export const Titulo = styled.h1`

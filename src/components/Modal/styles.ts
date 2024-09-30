@@ -1,16 +1,22 @@
 import styled from 'styled-components'
 import { cores } from '../../styles'
 
-export const ModalOverlay = styled.div`
+interface ModalOverlayProps {
+  isOpen: boolean
+}
+
+export const ModalOverlay = styled.div<ModalOverlayProps>`
+  display: ${(props) => (props.isOpen ? 'flex' : 'none')};
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.6);
-  display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1;
+  overflow: hidden;
 `
 
 export const ModalContent = styled.div`

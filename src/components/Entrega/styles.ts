@@ -1,14 +1,13 @@
 import styled from 'styled-components'
 import { cores } from '../../styles'
 
-export const ModalOverlay = styled.div<{ isOpen: boolean }>`
-  display: ${(props) => (props.isOpen ? 'block' : 'none')};
+export const EntregaModalOverlay = styled.div<{ isOpen: boolean }>`
+  display: ${(props) => (props.isOpen ? 'flex' : 'none')};
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  display: flex;
   justify-content: center;
   align-items: center;
   z-index: 3;
@@ -22,6 +21,7 @@ export const ModalWrapper = styled.div`
   right: 0;
   height: 100%;
 `
+
 export const Titulo = styled.h1`
   font-family: 'Roboto', sans-serif;
   font-size: 20px;

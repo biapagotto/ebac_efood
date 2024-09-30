@@ -10,6 +10,7 @@ export const HeaderContainer = styled.header`
   justify-content: space-between;
   padding: 0 20px;
   overflow: hidden;
+  z-index: 1;
 `
 
 export const BackgroundImage = styled.img`

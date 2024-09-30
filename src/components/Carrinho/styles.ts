@@ -1,22 +1,17 @@
 import styled from 'styled-components'
 import { cores } from '../../styles'
 
-interface ModalOverlayProps {
-  isOpen: boolean
-}
-
-export const ModalOverlay = styled.div<ModalOverlayProps>`
+export const ModalOverlay = styled.div<{ isOpen: boolean }>`
+  display: ${(props) => (props.isOpen ? 'block' : 'none')};
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: #000000cc;
-  display: ${(props) => (props.isOpen ? 'flex' : 'none')};
+  background-color: rgba(0, 0, 0, 0.4);
   justify-content: center;
   align-items: center;
-  z-index: 3;
-  overflow: hidden;
+  z-index: 1;
 `
 
 export const Wrapper = styled.div`
@@ -27,6 +22,12 @@ export const Wrapper = styled.div`
   height: 100vh;
   background-color: ${cores.coral};
   z-index: 2;
+
+  pointer-events: auto;
+  &:focus,
+  &:hover {
+    pointer-events: all;
+  }
 `
 
 export const ProdutoCard = styled.div`

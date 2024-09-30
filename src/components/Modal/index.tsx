@@ -15,18 +15,24 @@ interface ModalProps {
   onClose: () => void
   produto: MenuItem
   onAddToCart: (product: MenuItem) => void
+  isOpen: boolean
 }
 
 const ModalCompra: React.FC<ModalProps> = ({
   onClose,
   produto,
-  onAddToCart
+  onAddToCart,
+  isOpen
 }) => {
   useEffect(() => {
-    document.body.classList.add('no-scroll')
+    if (isOpen) {
+      document.body.classList.add('no-scroll')
+    } else {
+      document.body.classList.remove('no-scroll')
+    }
 
     return () => document.body.classList.remove('no-scroll')
-  }, [])
+  }, [isOpen])
 
   const formatarPreco = (preco: string) => {
     const valorNumerico = parseFloat(preco)
@@ -36,8 +42,10 @@ const ModalCompra: React.FC<ModalProps> = ({
     })
   }
 
+  if (!isOpen) return null
+
   return (
-    <ModalOverlay>
+    <ModalOverlay isOpen={isOpen}>
       <ModalContent>
         <CloseButton onClick={onClose}>X</CloseButton>
         <ProductImage src={produto.foto} alt={produto.descricao} />
