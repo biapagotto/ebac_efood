@@ -81,13 +81,10 @@ const Pagamento: React.FC<PagamentoProps> = ({
       setProdutosConfirmados(produtos)
       setConfirmationModalOpen(true)
     } catch (error) {
-      if (error instanceof Error) {
-        console.error('Erro no pagamento:', error)
-        alert(`Falha ao processar o pagamento. Erro: ${error.message}`)
-      } else {
-        console.error('Erro desconhecido:', error)
-        alert('Falha ao processar o pagamento. Erro desconhecido.')
-      }
+      alert(
+        'Erro no pagamento: ' +
+          (error instanceof Error ? error.message : 'Desconhecido')
+      )
     }
   }
 
@@ -107,21 +104,8 @@ const Pagamento: React.FC<PagamentoProps> = ({
     return true
   }
 
-  const closePaymentModal = () => {
-    onClose()
-  }
-
-  const closeConfirmationModal = () => {
-    setConfirmationModalOpen(false)
-    closePaymentModal()
-  }
-
   const handleBackToDelivery = () => {
     setEntregaOpen(true)
-  }
-
-  const handleBackToCart = () => {
-    setEntregaOpen(false)
   }
 
   return (
@@ -131,13 +115,11 @@ const Pagamento: React.FC<PagamentoProps> = ({
           isOpen={isEntregaOpen}
           onClose={() => setEntregaOpen(false)}
           onDeliveryDataChange={(data) => {
-            setEntregaOpen(false)
             deliveryData(data)
+            setEntregaOpen(false)
           }}
-          onBackToCart={handleBackToCart}
-          openPaymentModal={function (): void {
-            throw new Error('Function not implemented.')
-          }}
+          onBackToCart={() => setEntregaOpen(false)}
+          openPaymentModal={() => setEntregaOpen(false)}
         />
       ) : (
         <PaymentModal isOpen={isOpen}>
@@ -239,7 +221,10 @@ const Pagamento: React.FC<PagamentoProps> = ({
 
       {isConfirmationModalOpen && (
         <Confirmacao
-          onClose={closeConfirmationModal}
+          onClose={() => {
+            setConfirmationModalOpen(false)
+            onClose()
+          }}
           produtos={produtosConfirmados}
         />
       )}
